@@ -45,7 +45,7 @@ func main() {
 	sessionStore.Options = &sessions.Options{
 		Path: "/", MaxAge: 86400 * 7, HttpOnly: true, Secure: secureCookies, SameSite: http.SameSiteLaxMode,
 	}
-	addr := env("ADDR", ":8080")
+	addr := env("ADDR", ":"+env("PORT", "8080"))
 	server := &http.Server{
 		Addr: addr, Handler: router.New(db, sessionStore, []byte(csrfKey), secureCookies, env("UPLOAD_DIR", "static/uploads"), development),
 		ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 60 * time.Second,
