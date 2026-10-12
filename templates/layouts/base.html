@@ -1,0 +1,33 @@
+{{define "base"}}<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>{{.Title}} | VTG Store</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="announcement">ของดีไม่จำเป็นต้องใหม่เสมอไป <span>ของวินเทจคัดสรร ส่งต่อกันในชุมชน</span></div>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="หน้าแรก VTG Store">VTG<span>.</span></a>
+    <p class="header-note">ของดีมีคุณค่า<br>ส่งต่อได้เสมอ</p>
+    <nav class="main-nav" aria-label="เมนูหลัก">
+      <a href="/">เลือกชมสินค้า</a>
+      {{if .User}}<a href="/products/new">ลงขายสินค้า</a><a href="/profile">โปรไฟล์ของฉัน</a>{{if eq .User.Role "admin"}}<a href="/admin">ผู้ดูแลระบบ</a>{{end}}
+      <form class="nav-form" method="post" action="/logout">{{.CSRFField}}<button class="text-button" type="submit">ออกจากระบบ</button></form>
+      {{else}}<a href="/login">เข้าสู่ระบบ</a><a class="nav-join" href="/register">สมัครสมาชิก <span aria-hidden="true">↗</span></a>{{end}}
+    </nav>
+  </header>
+  <main>
+    {{if .Flash}}<div class="notice" role="status">{{.Flash}}</div>{{end}}
+    {{if .Error}}<div class="notice notice-error" role="alert">{{.Error}}</div>{{end}}
+    {{template "content" .}}
+  </main>
+  <footer class="site-footer">
+    <a class="wordmark footer-mark" href="/">VTG<span>.</span></a>
+    <p>ของชิ้นโปรดจากวันวาน กำลังรอเจ้าของคนต่อไป</p>
+    <span>ส่งต่อคุณค่า ให้ไปต่ออีกครั้ง</span>
+  </footer>
+</body>
+</html>{{end}}

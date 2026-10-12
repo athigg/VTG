@@ -1,0 +1,14 @@
+{{define "content"}}
+<section class="form-page profile-page">
+  <div class="form-aside profile-aside"><p class="eyebrow">พื้นที่ของคุณในตลาด</p><h1>บอกเล่า<br><em>ความเป็นคุณ</em></h1><p>ชื่อและข้อความแนะนำตัวสั้น ๆ ช่วยให้ผู้ซื้อรู้จักและมั่นใจในการซื้อขายกับคุณ</p><div class="aside-rule"></div><span>ข้อมูลโปรไฟล์</span></div>
+  <div class="form-panel"><p class="eyebrow">ตั้งค่าบัญชี</p><h2>แก้ไขโปรไฟล์</h2>
+    <form method="post" action="/profile" class="stack-form">
+      {{.CSRFField}}
+      <label for="name">ชื่อที่ใช้แสดง</label><input id="name" name="name" required minlength="2" maxlength="100" value="{{.Profile.Name}}">
+      <label for="email">อีเมล</label><input id="email" type="email" disabled value="{{.Profile.Email}}"><span class="field-note">ไม่สามารถแก้ไขอีเมลที่ใช้เข้าสู่ระบบได้จากหน้านี้</span>
+      <label for="bio">แนะนำตัว <span class="label-hint">ไม่บังคับ ไม่เกิน 500 ตัวอักษร</span></label><textarea id="bio" name="bio" maxlength="500" rows="5">{{.Profile.Bio}}</textarea>
+      <button class="button button-dark button-wide" type="submit">บันทึกโปรไฟล์ <span aria-hidden="true">↗</span></button>
+    </form>
+  </div>
+</section>
+{{end}}

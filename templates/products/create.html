@@ -1,0 +1,16 @@
+{{define "content"}}
+<section class="form-page listing-page">
+  <div class="form-aside listing-aside"><p class="eyebrow">ส่งต่อของดีให้คนที่ใช่</p><h1>ให้ของชิ้นนี้<br>ได้ไปต่อ<em>อีกครั้ง</em></h1><p>เล่าให้เจ้าของคนถัดไปฟังว่าอะไรทำให้ชิ้นนี้มีคุณค่า รายละเอียดชัดเจนช่วยให้ผู้ซื้อเลือกได้ง่ายขึ้น</p><div class="aside-rule"></div><span>ลงประกาศสินค้าใหม่</span></div>
+  <div class="form-panel"><p class="eyebrow">ประกาศขายของคุณ</p><h2>ลงขายสินค้า</h2>
+    <form method="post" action="/products" enctype="multipart/form-data" class="stack-form">
+      {{.CSRFField}}
+      <label for="title">ชื่อสินค้า</label><input id="title" name="title" required minlength="3" maxlength="120">
+      <label for="description">รายละเอียดสินค้า</label><textarea id="description" name="description" required minlength="10" maxlength="2000" rows="5"></textarea>
+      <div class="form-row"><div><label for="price">ราคา (฿)</label><input id="price" name="price" type="number" min="0.01" max="1000000" step="0.01" required></div><div><label for="category">หมวดหมู่</label><select id="category" name="category" required><option value="">เลือกหมวดหมู่</option>{{range .Categories}}<option value="{{.}}">{{categoryLabel .}}</option>{{end}}</select></div></div>
+      <label for="condition">สภาพสินค้า</label><select id="condition" name="condition" required><option value="">เลือกสภาพสินค้า</option><option value="Like new">เหมือนใหม่</option><option value="Very good">ดีมาก</option><option value="Good">ดี</option><option value="Well loved">ผ่านการใช้งาน</option></select>
+      <label for="image">รูปสินค้า <span class="label-hint">JPEG หรือ PNG ขนาดไม่เกิน 5 MB</span></label><input id="image" name="image" type="file" accept="image/jpeg,image/png">
+      <button class="button button-dark button-wide" type="submit">ลงประกาศขาย <span aria-hidden="true">↗</span></button>
+    </form>
+  </div>
+</section>
+{{end}}

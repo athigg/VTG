@@ -1,0 +1,15 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-heading"><div><p class="eyebrow">จัดการร้านค้า</p><h1>แดชบอร์ดผู้ดูแล<span>.</span></h1></div><a class="button button-outline" href="/">กลับไปหน้าตลาด</a></div>
+  <section class="admin-section"><div class="section-title"><div><p class="eyebrow">สมาชิก</p><h2>บัญชีผู้ใช้</h2></div><span>ทั้งหมด {{len .Users}} บัญชี</span></div>
+    <div class="table-wrap"><table><thead><tr><th>ชื่อ</th><th>อีเมล</th><th>บทบาท</th><th>สถานะ</th><th>การจัดการ</th></tr></thead><tbody>
+    {{range .Users}}<tr><td>{{.Name}}</td><td>{{.Email}}</td><td><form class="inline-form" method="post" action="/admin/users/{{.ID}}/role">{{$.CSRFField}}<select name="role"><option value="user" {{if eq .Role "user"}}selected{{end}}>สมาชิก</option><option value="admin" {{if eq .Role "admin"}}selected{{end}}>ผู้ดูแลระบบ</option></select><button class="small-button" type="submit">บันทึก</button></form></td><td>{{if .Active}}ใช้งานอยู่{{else}}ระงับการใช้งาน{{end}}</td><td><form method="post" action="/admin/users/{{.ID}}/status">{{$.CSRFField}}<input type="hidden" name="active" value="{{if .Active}}false{{else}}true{{end}}"><button class="text-button" type="submit">{{if .Active}}ระงับบัญชี{{else}}เปิดใช้งาน{{end}}</button></form></td></tr>{{end}}
+    </tbody></table></div>
+  </section>
+  <section class="admin-section"><div class="section-title"><div><p class="eyebrow">รายการในตลาด</p><h2>ประกาศขาย</h2></div><span>{{len .Products}} รายการล่าสุด</span></div>
+    <div class="table-wrap"><table><thead><tr><th>สินค้า</th><th>ผู้ขาย</th><th>ราคา</th><th>วันที่ลงขาย</th><th>การจัดการ</th></tr></thead><tbody>
+    {{range .Products}}<tr><td>{{.Title}}</td><td>{{.User.Name}}</td><td>{{money .PriceCents}}</td><td>{{.CreatedAt.Format "02/01/2006"}}</td><td><form method="post" action="/admin/products/{{.ID}}/delete">{{$.CSRFField}}<button class="text-button danger-text" type="submit">ลบประกาศ</button></form></td></tr>{{end}}
+    </tbody></table></div>
+  </section>
+</section>
+{{end}}

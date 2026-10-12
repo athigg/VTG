@@ -1,0 +1,15 @@
+{{define "content"}}
+<section class="form-page auth-page">
+  <div class="form-aside"><p class="eyebrow">ยินดีต้อนรับกลับมา</p><h1>ของชิ้นต่อไป<br>กำลังรอคุณอยู่</h1><p>เข้าสู่ระบบเพื่อเลือกชมสินค้า จัดการประกาศขาย หรือกลับไปดูสิ่งที่คุณสนใจ</p><div class="aside-rule"></div><span>ของดีมีเรื่องราว<br>รอเจ้าของคนใหม่</span></div>
+  <div class="form-panel"><p class="eyebrow">บัญชีของคุณ</p><h2>เข้าสู่ระบบ</h2>
+    <form method="post" action="/login" class="stack-form">
+      {{.CSRFField}}
+      <label for="email">อีเมล</label><input id="email" name="email" type="email" required autocomplete="username" value="{{.DemoEmail}}">
+      <label for="password">รหัสผ่าน</label><input id="password" name="password" type="password" required autocomplete="current-password" value="{{.DemoPassword}}">
+      <button class="button button-dark button-wide" type="submit">เข้าสู่ระบบ <span aria-hidden="true">↗</span></button>
+    </form>
+    {{if .DemoLogins}}<div class="demo-box"><p class="eyebrow">บัญชีตัวอย่างสำหรับเครื่องนี้</p><p>ผู้ดูแลระบบ: <strong>admin@vtg.local</strong> / <strong>VintageAdmin123!</strong></p><p>ผู้ซื้อ: <strong>demo@vtg.local</strong> / <strong>VintageUser123!</strong></p><div class="demo-actions"><a href="/login?demo=admin">กรอกบัญชีผู้ดูแล</a><a href="/login?demo=user">กรอกบัญชีผู้ซื้อ</a></div><small>ใช้ได้เฉพาะโหมดพัฒนา และไม่มีการสร้างบัญชีเหล่านี้ในระบบจริง</small></div>{{end}}
+    <p class="form-foot">ยังไม่มีบัญชีใช่ไหม? <a href="/register">สมัครสมาชิก</a></p>
+  </div>
+</section>
+{{end}}

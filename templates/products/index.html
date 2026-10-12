@@ -1,0 +1,42 @@
+{{define "content"}}
+<section class="store-intro">
+  <div class="intro-copy">
+    <p class="eyebrow">ตลาดของดีที่มีเรื่องราว · เริ่มต้นปี 2024</p>
+    <h1>ค้นพบชิ้นโปรด<br>ที่คุณไม่รู้ว่า<br><em>กำลังตามหา</em></h1>
+    <p class="intro-text">เฟอร์นิเจอร์ ของใช้ และของสะสมที่มีเอกลักษณ์ พร้อมโอกาสครั้งใหม่จากผู้ขายใกล้คุณ</p>
+    <a class="button button-dark" href="/products/new">ลงขายของชิ้นโปรด <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="intro-image" role="img" aria-label="ห้องที่ตกแต่งด้วยเฟอร์นิเจอร์วินเทจในแสงแดดอ่อน ๆ">
+    <span class="image-stamp">ของดี<br>มีเรื่องราว</span>
+    <span class="image-caption">ของชิ้นโปรดชิ้นต่อไป อาจมีเรื่องราวมาก่อน</span>
+  </div>
+</section>
+<section class="catalog" aria-labelledby="catalog-heading">
+  <div class="catalog-heading">
+    <div><p class="eyebrow">สินค้าแนะนำ</p><h2 id="catalog-heading">ของดีที่น่าชม<span>.</span></h2></div>
+    <form class="filters" method="get" action="/">
+      <label class="visually-hidden" for="search">ค้นหาประกาศขาย</label>
+      <input id="search" name="q" type="search" placeholder="ค้นหาสินค้า" value="{{.Query}}">
+      <label class="visually-hidden" for="category">กรองตามหมวดหมู่</label>
+      <select id="category" name="category"><option value="">สินค้าทุกหมวด</option>{{range .Categories}}<option value="{{.}}" {{if eq $.Category .}}selected{{end}}>{{categoryLabel .}}</option>{{end}}</select>
+      <button class="button button-outline" type="submit">กรองสินค้า</button>
+    </form>
+  </div>
+  {{if .Products}}
+  <div class="product-grid">
+    {{range .Products}}
+    <article class="product-card">
+      <a class="product-image" href="{{if $.User}}{{if eq $.User.ID .UserID}}/products/{{.ID}}/edit{{else}}#{{end}}{{else}}#{{end}}" aria-label="{{.Title}}">
+        {{if .ImagePath}}<img src="{{.ImagePath}}" alt="{{.Title}}" loading="lazy">{{else}}<div class="image-placeholder"><span>{{.Category}}</span></div>{{end}}
+        <span class="condition-tag">{{conditionLabel .Condition}}</span>
+      </a>
+      <div class="product-meta"><span>{{categoryLabel .Category}}</span><span>ผู้ขาย: {{.User.Name}}</span></div>
+      <h3>{{.Title}}</h3>
+      <div class="product-bottom"><span class="price">{{money .PriceCents}}</span>{{if and $.User (eq $.User.ID .UserID)}}<a class="manage-link" href="/products/{{.ID}}/edit">แก้ไขประกาศ</a>{{end}}</div>
+    </article>
+    {{end}}
+  </div>
+  {{else}}<div class="empty-state"><p>ยังไม่มีสินค้าในหมวดนี้</p><a href="/">ล้างตัวกรอง</a></div>{{end}}
+</section>
+<section class="seller-strip"><p class="eyebrow">ส่งต่อของดีให้เจ้าของคนใหม่</p><h2>ของที่คุณไม่ได้ใช้แล้ว<br>อาจเป็นชิ้นโปรดของใครอีกคน</h2><a class="button button-light" href="{{if .User}}/products/new{{else}}/register{{end}}">นำสินค้ามาลงขาย <span aria-hidden="true">↗</span></a></section>
+{{end}}

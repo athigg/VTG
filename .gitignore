@@ -1,0 +1,6 @@
+.env
+/data/
+/static/uploads/*
+!/static/uploads/.gitkeep
+*.exe
+*.test
